@@ -1,3 +1,4 @@
+<!--
 @startuml
 entity "Читатель" as reader {
 
@@ -62,3 +63,4 @@ copy }|--|| reader: "берет на дом"
 book }|--|| category: "принадлежит"
 category ||--|{ category: "принадлежит"
 @enduml
+-->
