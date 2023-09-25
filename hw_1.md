@@ -1,4 +1,4 @@
-### uml: class diagram
+### Task 1
 ```plantuml
 @startuml
 entity "Читатель" as reader {
