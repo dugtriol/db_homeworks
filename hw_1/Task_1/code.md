@@ -65,3 +65,4 @@ book }|--|| category: "принадлежит"
 category ||--|{ category: "принадлежит"
 @enduml
 ```
+![image](Task_1.png)
