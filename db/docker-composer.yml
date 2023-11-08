@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  p-master:
+    image: bitnami/postgresql-repmgr:latest
+    environment:
+      POSTGRESQL_POSTGRES_PASSWORD: adminpassword
+      POSTGRESQL_USERNAME: mandzhieva_216
+      POSTGRESQL_PASSWORD: mandzhieva_216
+      POSTGRESQL_DATABASE: mandzhieva_216
+      REPMGR_PASSWORD: repmgrpassword
+      REPMGR_PRIMARY_HOST: p-master
+      REPMGR_PARTNER_NODES: p-master,p-slave
+      REPMGR_NODE_NAME: node-1
+      REPMGR_NODE_NETWORK_NAME: p-master
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./scripts:/docker-entrypoint-initdb.d/
+      - postgres_master_data:/bitnami/postgresql
+
+  p-slave:
+    image: bitnami/postgresql-repmgr:latest
+    environment:
+      POSTGRESQL_POSTGRES_PASSWORD: adminpassword
+      POSTGRESQL_USERNAME: mandzhieva_216
+      POSTGRESQL_PASSWORD: mandzhieva_216
+      POSTGRESQL_DATABASE: mandzhieva_216
+      REPMGR_PASSWORD: repmgrpassword
+      REPMGR_PRIMARY_HOST: p-master
+      REPMGR_PARTNER_NODES: p-master,p-slave
+      REPMGR_NODE_NAME: node-2
+      REPMGR_NODE_NETWORK_NAME: p-slave
+    ports:
+      - "5433:5432"
+    depends_on:
+      - p-master
+    volumes:
+      - postgres_slave_data:/bitnami/postgresql
+
+volumes:
+  postgres_master_data:
+    driver: local
+  postgres_slave_data:
+    driver: local
